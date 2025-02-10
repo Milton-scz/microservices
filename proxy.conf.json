@@ -1,0 +1,12 @@
+{
+  "/v1/auth": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/v1/user": {
+    "target": "http://localhost:8080",
+    "secure": false
+  }
+}
+

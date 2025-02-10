@@ -1,0 +1,120 @@
+<ng-template #ajusteModal let-modal>
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);">
+      <div class="modal-header" style="background-color: #007bff; color: white;">
+        <h5 class="modal-title" id="categoryModalLabel">Agregar Ajuste</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="border: none; background: transparent; color: white;">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7f7f7; ">
+        <form (ngSubmit)="onSubmit()" [formGroup]="ajusteForm">
+          <div class="row">
+            <!-- Producto -->
+            <div class="col-md-2 mb-3">
+              <label for="productId" class="form-label">Producto</label>
+              <select class="form-control" id="productId" formControlName="productId" style="border-radius: 10px;">
+                <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+              </select>
+            </div>
+
+            <!-- Almacen -->
+            <div class="col-md-2 mb-3">
+              <label for="almacenId" class="form-label">Almacen</label>
+              <select class="form-control" id="almacenId" formControlName="almacenId" style="border-radius: 10px;">
+                <option *ngFor="let almacen of almacens" [value]="almacen.id">{{ almacen.name }}</option>
+              </select>
+            </div>
+
+            <!-- Tipo -->
+            <div class="col-md-2 mb-3">
+              <label for="tipo" class="form-label">Tipo</label>
+              <select class="form-control" id="tipo" formControlName="tipo" style="border-radius: 10px;">
+                <option [value]="1">Ingreso</option>
+                <option [value]="2">Egreso</option>
+              </select>
+            </div>
+
+            <!-- Cantidad -->
+            <div class="col-md-2 mb-3">
+              <label for="cantidad" class="form-label">Cantidad</label>
+              <input type="text" class="form-control" id="cantidad" formControlName="cantidad" style="border-radius: 10px;">
+            </div>
+
+            <!-- Glosa -->
+            <div class="col-md-2 mb-3">
+              <label for="glosa" class="form-label">Glosa</label>
+              <input type="text" class="form-control" id="glosa" formControlName="glosa" style="border-radius: 10px;">
+            </div>
+
+            <!-- Espacio extra para el botón en la misma fila -->
+            <div class="col-md-2 mb-3 d-flex justify-content-center align-items-center">
+              <button type="submit" class="btn btn-primary" style="border-radius: 10px; width: 100%;">Guardar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<!-- Tabla de Categorías -->
+<section id="contenido_principal" class="container">
+  <div class="row justify-content-center">
+    <div class="col text-center">
+      <h4 class="box-title text-secondary" style="font-size: 30px;">
+        Gestionar AJustes Inventario
+      </h4>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="card border-primary">
+        <div class="card-body p-2">
+          <button class="btn btn-success btn-sm" (click)="open(ajusteModal)">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="card border-dark">
+        <div class="card-body p-3">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-condensed" id="tabla-categorias">
+              <thead class="bg-light">
+                <tr>
+                  <th class="text-center">ID</th>
+                  <th class="text-center">Producto</th>
+                  <th class="text-center">Almacen</th>
+                  <th class="text-center">Tipo</th>
+                  <th class="text-center">Cantidad</th>
+                  <th class="text-center">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ajuste of ajustes">
+                  <td class="text-center">{{ajuste.id}}</td>
+                  <td class="text-center">{{ajuste.product.name}}</td>
+                  <td class="text-center">{{ajuste.almacen.name}}</td>
+                  <td class="text-center">
+                    {{ajuste.tipo === 1 ? 'Ingreso' : 'Egreso'}}
+                  </td>
+                  <td class="text-center">{{ajuste.cantidad}}</td>
+                  <td class="text-center">
+                    <button (click)="deleteAjuste(ajuste.id)" class="btn btn-danger btn-sm">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

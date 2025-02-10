@@ -1,0 +1,147 @@
+<!-- Modal: Agregar o Editar Rol -->
+<ng-template #roleModal let-modal>
+  <div class="modal-dialog modal-lg" style="max-width: 800px;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007bff; color: white;">
+        <h5 class="modal-title">Agregar o Editar Rol</h5>
+        <button type="button" class="btn-close" (click)="modal.close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="background-color: #f7f7f7;">
+        <form (ngSubmit)="onSubmit()" [formGroup]="roleForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" formControlName="name" />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="description" formControlName="description" />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal: Agregar Permisos al Rol -->
+<ng-template #addPermisosRoleModal let-modal>
+  <div class="modal-dialog modal-xl" style="width: 80%;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007bff; color: white;">
+        <h5 class="modal-title">Permisos del Rol {{ currentRole?.name }}</h5>
+        <button type="button" class="btn-close" (click)="modal.close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="bg-light">
+              <tr>
+                <th class="text-center">Permiso</th>
+                <th class="text-center">Activado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let permiso of allPermissions">
+                <td class="text-center">{{ permiso.name }}</td>
+                <td class="text-center">
+                  <input type="checkbox" [checked]="rolePermissions.includes(permiso.id)" (change)="toggleAddPermission(permiso.id, $event)" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-center mt-3">
+          <button class="btn btn-success" (click)="savePermissions()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal: Eliminar Permisos del Rol -->
+<ng-template #deletePermisosRoleModal let-modal>
+  <div class="modal-dialog modal-xl" style="width: 80%;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007bff; color: white;">
+        <h5 class="modal-title">Permisos del Rol {{ currentRole?.name }}</h5>
+        <button type="button" class="btn-close" (click)="modal.close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="bg-light">
+              <tr>
+                <th class="text-center">Permiso</th>
+                <th class="text-center">Activado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let permiso of allPermissions">
+                <td class="text-center">{{ permiso.name }}</td>
+                <td class="text-center">
+                  <input type="checkbox" [checked]="rolePermissions.includes(permiso.id)" (change)="toggleRemovePermission(permiso.id, $event)" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-center mt-3">
+          <button class="btn btn-success" (click)="deletePermissionstoRole()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Tabla de Roles -->
+<section id="contenido_principal" class="container">
+  <div class="row justify-content-center">
+    <div class="col text-center">
+      <h4 class="box-title text-secondary" style="font-size: 30px;">Gestionar Roles</h4>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="card border-primary">
+        <div class="card-body p-2">
+          <button class="btn btn-success btn-sm" (click)="open(roleModal)">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="card border-dark">
+        <div class="card-body p-3">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="tabla-roles">
+              <thead class="bg-light">
+                <tr>
+                  <th class="text-center">ID</th>
+                  <th class="text-center">Nombre</th>
+                  <th class="text-center">Descripción</th>
+                  <th class="text-center">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let role of roles">
+                  <td class="text-center">{{role.id}}</td>
+                  <td class="text-center">{{role.name}}</td>
+                  <td class="text-center">{{role.description}}</td>
+                  <td class="text-center">
+                    <button (click)="openAddPermissionsModal(role, addPermisosRoleModal)" class="btn btn-success btn-sm">Add Permisos</button>
+                    <button (click)="openDelPermissionsModal(role, deletePermisosRoleModal)" class="btn btn-danger btn-sm">Delete Permisos</button>
+                    <button (click)="editRole(role, roleModal)" class="btn btn-warning btn-sm">Editar</button>
+                    <button (click)="deleteRole(role.id)" class="btn btn-danger btn-sm">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
