@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { apiGateWay } from '../config/apiGategay';
-import { User } from 'src/app/model/user';
+
 import { UserSave } from '../model/UserSave';
 import { UserUpdate } from '../model/UserUpdate';
 import { Permission } from '../model/Permission';

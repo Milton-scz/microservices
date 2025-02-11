@@ -6,6 +6,8 @@ import { AuthService } from './services/auth.service';
 import { LoginComponent } from './authentication/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './authentication/auth-interceptor';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
 
   imports: [
@@ -13,7 +15,8 @@ import { AuthInterceptor } from './authentication/auth-interceptor';
     AppRoutingModule,
     HttpClientModule,
     LoginComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [
     AuthService,

@@ -9,20 +9,21 @@ import { ProductSave } from '../model/ProductSave';
 import { Almacen } from '../model/Almacen';
 import { AjusteInventario } from '../model/AjusteInventario';
 import { AjusteInventarioDto } from '../model/AjusteInventarioDto';
+import { Venta } from '../model/Venta';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-  private baseUrl = apiGateWay.url + '/product-service';
+export class VentaService {
+  private baseUrl = apiGateWay.url + '/venta-service';
 
   constructor(private http: HttpClient) { }
 
-  //  CATEGORY
-  getAllCategories(): Observable<Category[]> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); return this.http.get<Category[]>(this.baseUrl + "/category/getAll", { headers, withCredentials: true })   .pipe(catchError(this.handleError));}
-  createCategory(category: Category): Observable<Category> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); return this.http.post<Category>(this.baseUrl + "/category/create", category, { headers, withCredentials: true }) .pipe(catchError(this.handleError));}
-  updateCategory(category: Category): Observable<Category> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  return this.http.put<Category>(`${this.baseUrl}/category/update`, category, { headers, withCredentials: true })  .pipe(catchError(this.handleError)); }
-  deleteCategory(categoryId: string): Observable<any> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  return this.http.delete<any>(`${this.baseUrl}/category/deleteCategoryById/${categoryId}`, { headers, withCredentials: true }) .pipe(catchError(this.handleError)); }
+  //  VENTAS
+  getAllVentas(): Observable<Venta[]> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); return this.http.get<Venta[]>(this.baseUrl + "/venta/getAll", { headers, withCredentials: true })   .pipe(catchError(this.handleError));}
+  createVenta(venta: Venta): Observable<Venta> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); return this.http.post<Venta>(this.baseUrl + "/venta/create", venta, { headers, withCredentials: true }) .pipe(catchError(this.handleError));}
+  updateVenta(venta: Venta): Observable<Venta> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  return this.http.put<Venta>(`${this.baseUrl}/venta/update`, venta, { headers, withCredentials: true })  .pipe(catchError(this.handleError)); }
+  deleteVenta(ventaId: string): Observable<any> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  return this.http.delete<any>(`${this.baseUrl}/venta/deleteVentaById/${ventaId}`, { headers, withCredentials: true }) .pipe(catchError(this.handleError)); }
 
   //  PRODUCT
   getAllProducts(): Observable<Product[]> { const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); return this.http.get<Product[]>(this.baseUrl + "/product/getAll", { headers, withCredentials: true })   .pipe(catchError(this.handleError));}

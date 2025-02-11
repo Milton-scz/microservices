@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/model/user';
+import { User } from 'src/app/model/User';
 import { UserSave } from 'src/app/model/UserSave';
 import { Role } from 'src/app/model/Role';
 import { ReactiveFormsModule } from '@angular/forms';

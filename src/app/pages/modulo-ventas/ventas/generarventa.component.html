@@ -1,0 +1,125 @@
+<section id="contenido_principal" class="container mx-auto py-8">
+  <div class="row justify-content-center">
+    <div class="col text-center">
+      <h4 class="box-title text-primary">Gestionar Ventas</h4>
+    </div>
+  </div>
+
+  <div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-xl">
+        <!-- Contenedor Principal -->
+        <div class="p-8 text-gray-900 dark:text-gray-100">
+          <!-- Bloque superior centrado -->
+          <div class="mb-8 text-center">
+            <h3 class="text-4xl font-extrabold text-blue-700">PagoFacil QR y Tigo Money</h3>
+            <p class="text-blue-500 font-medium">Integración de servicios PagoFacil</p>
+          </div>
+
+          <!-- División en dos columnas -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Primera Parte: Formulario -->
+            <div class="col-md-4">
+              <h3 class="text-3xl font-semibold text-gray-800">Datos para la factura</h3>
+              <form [formGroup]="form" (ngSubmit)="onSubmit()" target="QrImage">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <!-- Columna de datos del cliente -->
+                  <div class="space-y-8">
+                    <div class="form-group">
+                      <label for="cliente" class="font-semibold text-gray-800">Cliente</label>
+                      <select id="userId" formControlName="userId" (change)="onClienteSelect($event)" class="form-control p-2 border border-gray-300 rounded-lg">
+                        <option value="">Seleccionar Cliente</option>
+                        <option *ngFor="let users of users" [value]="users.id">{{ users.username }}</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label for="name" class="font-semibold text-gray-800">Nombre</label>
+                      <input type="text" class="form-control" id="name" formControlName="name" style="border-radius: 10px;">
+                      <div *ngIf="f['name'].invalid && f['name'].touched" class="text-red-500">
+                        El nombre es obligatorio y debe tener al menos 3 caracteres.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="cedula" class="font-semibold text-gray-800">Cédula</label>
+                      <input type="text" class="form-control" id="cedula" formControlName="cedula" style="border-radius: 10px;">
+                      <div *ngIf="f['cedula'].invalid && f['cedula'].touched" class="text-red-500">
+                        La cédula es obligatoria y debe ser numérica.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="email" class="font-semibold text-gray-800">Correo</label>
+                      <input type="text" class="form-control" id="email" formControlName="email" style="border-radius: 10px;">
+                      <div *ngIf="f['email'].invalid && f['email'].touched" class="text-red-500">
+                        El correo es obligatorio y debe ser válido.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="telefono" class="font-semibold text-gray-800">Teléfono</label>
+                      <input type="text" class="form-control" id="telefono" formControlName="telefono" style="border-radius: 10px;">
+                      <div *ngIf="f['telefono'].invalid && f['telefono'].touched" class="text-red-500">
+                        El teléfono es obligatorio y debe ser numérico.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Columna de otros datos -->
+                  <div class="space-y-8">
+                    <div>
+                      <label for="ciNit" class="font-semibold text-gray-800">CI/NIT</label>
+                      <input type="text" class="form-control" id="ciNit" formControlName="ciNit" style="border-radius: 10px;">
+                      <div *ngIf="f['ciNit'].invalid && f['ciNit'].touched" class="text-red-500">
+                        El CI/NIT es obligatorio.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="tcRazonSocial" class="font-semibold text-gray-800">Razón Social</label>
+                      <input type="text" class="form-control" id="tcRazonSocial" formControlName="tcRazonSocial" style="border-radius: 10px;">
+                      <div *ngIf="f['tcRazonSocial'].invalid && f['tcRazonSocial'].touched" class="text-red-500">
+                        La razón social es obligatoria.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="tnMonto" class="font-semibold text-gray-800">Monto Total</label>
+                      <input type="text" class="form-control" id="tnMonto" formControlName="tnMonto" style="border-radius: 10px;">
+                      <div *ngIf="f['tnMonto'].invalid && f['tnMonto'].touched" class="text-red-500">
+                        El monto es obligatorio y debe ser mayor que 0.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="tipoServicio" class="font-semibold text-gray-800">Tipo de Servicio</label>
+                      <select formControlName="tnTipoServicio" id="tipoServicio" class="form-control" style="border-radius: 10px;">
+                        <option value="1">Servicio QR</option>
+                        <option value="2">Tigo Money</option>
+                      </select>
+                      <div *ngIf="f['tnTipoServicio'].invalid && f['tnTipoServicio'].touched" class="text-red-500">
+                        El tipo de servicio es obligatorio.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-8 text-right">
+                  <button type="submit" class="btn btn-primary" style="border-radius: 10px; width: 100%;">Generar Cobro</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Segunda Parte: Imagen QR -->
+            <div class="col-md-4">
+              <div *ngIf="qrImage" class="w-full max-w-md">
+                <img [src]="qrImage" alt="QR Code" class="w-full h-auto rounded-md shadow-lg" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

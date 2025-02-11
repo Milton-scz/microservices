@@ -40,10 +40,7 @@ const routes: Routes = [
         path: 'productos',
         loadComponent: () => import('./pages/modulo-inventario/productos/producto.component').then((c)=> c.ProductoComponent)
       },
-      {
-        path: 'notas-compras',
-        loadComponent: () => import('./demo/other/sample-page/sample-page.component')
-      },
+
       {
         path: 'ofertas',
         loadComponent: () => import('./pages/modulo-inventario/ofertas/ofertas.component').then((c)=> c.OfertasComponent)
@@ -58,7 +55,15 @@ const routes: Routes = [
       },
       {
         path: 'ventas',
-        loadComponent: () => import('./demo/other/sample-page/sample-page.component')
+        loadComponent: () => import('./pages/modulo-ventas/ventas/ventas.component').then((c)=> c.VentasComponent)
+      },
+      {
+        path: 'ventas',
+        loadComponent: () => import('./pages/modulo-ventas/ventas/ventas.component').then((c)=> c.VentasComponent)
+      },
+      {
+        path: 'generar-venta',
+        loadComponent: () => import('./pages/modulo-ventas/ventas/generarventa.component').then((c)=> c.GenerarVentaComponent)
       },
       {
         path: 'pagos',
